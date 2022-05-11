@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Wallpaper Driver</string>
     <string name="title_activity_greeting_screen">WelcomeScreen</string>
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="title_home">Home</string>
