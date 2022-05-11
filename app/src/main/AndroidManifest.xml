@@ -10,12 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".MainScreen"
+            android:name="WelcomeScreen"
             android:exported="false"
-            android:label="@string/title_activity_main_screen" />
+            android:label="@string/title_activity_greeting_screen" />
         <activity
-            android:name=".WelcomeScreen"
-            android:exported="true">
+            android:name="MainScreen"
+            android:exported="true"
+            android:label="@string/title_activity_main_screen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

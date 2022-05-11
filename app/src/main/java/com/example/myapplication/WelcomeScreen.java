@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -37,8 +38,17 @@ public class WelcomeScreen extends AppCompatActivity {
         welcomePara.setAnimation(paragraphFadeIn); //fades in intro paragraph
         startBtn.setAnimation(buttonFadeIn);
 
+
+        //TODO: Check if activity changes on button click
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(WelcomeScreen.this, MainScreen.class));
+            }
+        });
+
+
+
     }
-    public void start_button(View view) {
-        // Do something in response to button
-    }
+
 }
