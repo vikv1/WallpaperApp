@@ -15,7 +15,7 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView welcome = (TextView) findViewById(R.id.hi); //creates textview object for greeting
+        final TextView welcome = (TextView) findViewById(R.id.greeting); //creates textview object for greeting
         final TextView welcomePara = (TextView) findViewById(R.id.welcomePara); //creates textview object for welcome paragraph
         final Button startBtn = (Button) findViewById(R.id.start_button); //creates button object
 
