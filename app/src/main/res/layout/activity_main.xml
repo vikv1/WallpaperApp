@@ -24,7 +24,7 @@
         android:id="@+id/welcomePara"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to the Wallpaper App!\nThis is an app in which
+        android:text="Welcome to the Wallpaper Driver!\nThis is an app in which
 you can easily change your wallpaper without having to navigate the settings!"
         android:textSize="30sp"
         android:gravity="center"
