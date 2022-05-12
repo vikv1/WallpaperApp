@@ -34,15 +34,26 @@ you can easily change your wallpaper without having to navigate the settings!"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
-        android:id="@+id/start_button"
+        android:id="@+id/guest_button"
         android:layout_width="262dp"
         android:layout_height="48dp"
-        android:text="Let's Go!"
         android:onClick="changeToMain"
+        android:text="Continue as Guest"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomePara" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="262dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="13dp"
+        android:onClick="logIn"
+        android:text="Log-in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guest_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
