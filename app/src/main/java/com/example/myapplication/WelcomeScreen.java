@@ -9,7 +9,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class WallpaperDriver extends AppCompatActivity {
+public class WelcomeScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class WallpaperDriver extends AppCompatActivity {
 
     }
     public void changeToMain(View view) {
-        startActivity(new Intent(WallpaperDriver.this, Main1Activity.class));
+        startActivity(new Intent(WelcomeScreen.this, Main1Activity.class));
 
     }
 }

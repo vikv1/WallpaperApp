@@ -14,7 +14,7 @@
             android:exported="false"
             android:label="@string/title_activity_main1" />
         <activity
-            android:name=".WallpaperDriver"
+            android:name=".WelcomeScreen"
             android:exported="true"
             android:label="WelcomeScreen">
             <intent-filter>
