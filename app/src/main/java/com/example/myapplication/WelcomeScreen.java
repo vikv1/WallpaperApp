@@ -38,17 +38,9 @@ public class WelcomeScreen extends AppCompatActivity {
         welcomePara.setAnimation(paragraphFadeIn); //fades in intro paragraph
         startBtn.setAnimation(buttonFadeIn);
 
-
-        //TODO: Check if activity changes on button click
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(WelcomeScreen.this, MainScreen.class));
-            }
-        });
-
-
+    }
+    public void changeToMain(View view) {
+        startActivity(new Intent(WelcomeScreen.this, Main1Activity.class));
 
     }
-
 }

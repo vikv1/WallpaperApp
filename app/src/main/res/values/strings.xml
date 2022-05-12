@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Wallpaper Driver</string>
-    <string name="title_activity_greeting_screen">WelcomeScreen</string>
+    <string name="app_name">My Application</string>
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_add">Add</string>
+    <string name="title_marketplace">Community</string>
+    <string name="title_activity_main1">Main1Activity</string>
 </resources>
