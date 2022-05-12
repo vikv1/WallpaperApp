@@ -48,7 +48,7 @@ public class Main1Activity extends AppCompatActivity {
 
     }
 
-    public void getImage(View arg0) {
+    public void getImage(View arg0) { //getImage and onActivityResult both get image from user gallery
         Intent i = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
