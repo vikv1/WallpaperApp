@@ -3,6 +3,8 @@ package  com.example.myapplication.ui.login;
 import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -19,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Support;
+import com.example.myapplication.WelcomeScreen;
 import com.example.myapplication.ui.login.LoginViewModel;
 import com.example.myapplication.ui.login.LoginViewModelFactory;
 import com.example.myapplication.databinding.ActivityLoginBinding;
@@ -129,4 +133,9 @@ private ActivityLoginBinding binding;
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
+
+    public void support(View view) {
+        startActivity(new Intent(LoginActivity.this, Support.class));
+    }
+
 }
