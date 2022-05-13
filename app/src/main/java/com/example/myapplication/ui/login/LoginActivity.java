@@ -138,4 +138,8 @@ private ActivityLoginBinding binding;
         startActivity(new Intent(LoginActivity.this, Support.class));
     }
 
+    public void register(View view) {
+        startActivity(new Intent(LoginActivity.this, Support.class));
+    }
+
 }
