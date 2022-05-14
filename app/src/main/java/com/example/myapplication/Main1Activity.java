@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TaskInfo;
 import android.app.WallpaperManager;
@@ -22,6 +23,10 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
@@ -37,7 +42,6 @@ public class Main1Activity extends AppCompatActivity {
 
     private ActivityMain1Binding binding;
     private static int RESULT_LOAD_IMAGE = 1;
-    Bitmap previousWallpaper = null;
 
 
     @Override
@@ -68,71 +72,129 @@ public class Main1Activity extends AppCompatActivity {
 
 
         Button resetWallPaperBtn = (Button) findViewById(R.id.reset_wallpaper);
-        //button object for resetting wallpaper
+
     }
 
     public void getImage(View arg0) { //getImage and onActivityResult both work together to get image from user gallery
-        Intent i = new Intent(
-                Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_IMAGE);
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        getImageLauncher.launch(i);
+//        startActivityForResult(i, RESULT_LOAD_IMAGE);
 
     }
 
 
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            ImageView imageView = (ImageView) findViewById(R.id.imgView);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            Bitmap imageBitmap = BitmapFactory.decodeFile(picturePath);
-            try {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(Main1Activity.this);
-                builder1.setMessage("Are you sure you would like to change your wallpaper?");
-                builder1.setCancelable(true);
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+//            Uri selectedImage = data.getData();
+//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//            Cursor cursor = getContentResolver().query(selectedImage,
+//                    filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            cursor.close();
+//            ImageView imageView = (ImageView) findViewById(R.id.imgView);
+//            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+//            Bitmap imageBitmap = BitmapFactory.decodeFile(picturePath);
+//            try {
+//                AlertDialog.Builder builder1 = new AlertDialog.Builder(Main1Activity.this);
+//                builder1.setMessage("Are you sure you would like to change your wallpaper?");
+//                builder1.setCancelable(true);
+//
+//                builder1.setPositiveButton(
+//                        "Yes",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                try {
+//                                    changeWallpaper(imageBitmap);
+//                                    Toast.makeText(getBaseContext(), "Wallpaper changed",
+//                                            Toast.LENGTH_SHORT).show();
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                dialog.cancel();
+//                            }
+//                        });
+//
+//
+//                builder1.setNegativeButton(
+//                        "No",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                Toast.makeText(getBaseContext(), "Wallpaper unchanged",
+//                                        Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//
+//                AlertDialog alert11 = builder1.create();
+//                alert11.show();
+//            } finally {
+//
+//            }
+//        } else {
+//
+//        }
+//    }
 
-                builder1.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                try {
-                                    previousWallpaper = getCurrentWallpaper();
-                                    changeWallpaper(imageBitmap);
-                                    Toast.makeText(getBaseContext(), "Wallpaper changed",
-                                            Toast.LENGTH_SHORT).show();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                dialog.cancel();
-                            }
-                        });
+    public ActivityResultLauncher<Intent> getImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        Cursor cursor = getContentResolver().query(selectedImage,
+                                filePathColumn, null, null, null);
+                        cursor.moveToFirst();
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        String picturePath = cursor.getString(columnIndex);
+                        cursor.close();
+                        ImageView imageView = (ImageView) findViewById(R.id.imgView);
+                        imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                        Bitmap imageBitmap = BitmapFactory.decodeFile(picturePath);
+                        try {
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Main1Activity.this);
+                            builder1.setMessage("Are you sure you would like to change your wallpaper?");
+                            builder1.setCancelable(true);
+
+                            builder1.setPositiveButton(
+                                    "Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            try {
+                                                changeWallpaper(imageBitmap);
+                                                Toast.makeText(getBaseContext(), "Wallpaper changed",
+                                                        Toast.LENGTH_SHORT).show();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                            dialog.cancel();
+                                        }
+                                    });
 
 
-                builder1.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Toast.makeText(getBaseContext(), "Wallpaper unchanged",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                            builder1.setNegativeButton(
+                                    "No",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Toast.makeText(getBaseContext(), "Wallpaper unchanged",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            } finally {
+                            AlertDialog alert11 = builder1.create();
+                            alert11.show();
+                        } finally {
 
-            }
-        }
-    }
+                        }
+                    }
+                }
+            });
 
     protected void changeWallpaper(Bitmap bitmap) throws IOException {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
@@ -150,19 +212,19 @@ public class Main1Activity extends AppCompatActivity {
         }
     }
 
-    protected void changeToPrevWallpaper() throws IOException {
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(Main1Activity.this);
-        if(previousWallpaper == null) {
-            Toast.makeText(getBaseContext(), "No previous wallpaper detected",
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            try {
-                wallpaperManager.setBitmap(previousWallpaper);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Toast.makeText(getBaseContext(), "Wallpaper successfully reverted",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
+//    protected void changeToPrevWallpaper() throws IOException {
+//        WallpaperManager wallpaperManager = WallpaperManager.getInstance(Main1Activity.this);
+//        if(previousWallpaper == null) {
+//            Toast.makeText(getBaseContext(), "No previous wallpaper detected",
+//                    Toast.LENGTH_SHORT).show();
+//        } else {
+//            try {
+//                wallpaperManager.setBitmap(previousWallpaper);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            Toast.makeText(getBaseContext(), "Wallpaper successfully reverted",
+//                    Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }
