@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">The Wallpaper Driver</string>
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="title_home">Home</string>
     <string name="title_add">Add</string>
     <string name="title_marketplace">Community</string>
     <string name="title_activity_main1">Main1Activity</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>

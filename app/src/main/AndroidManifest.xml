@@ -25,7 +25,7 @@
         <activity
             android:name=".WelcomeScreen"
             android:exported="true"
-            android:label="WelcomeScreen">
+            android:label="The Wallpaper Driver">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

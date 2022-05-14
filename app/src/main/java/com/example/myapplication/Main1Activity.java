@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.TaskInfo;
 import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +37,7 @@ public class Main1Activity extends AppCompatActivity {
 
     private ActivityMain1Binding binding;
     private static int RESULT_LOAD_IMAGE = 1;
+    Bitmap previousWallpaper = null;
 
 
     @Override
@@ -54,16 +56,19 @@ public class Main1Activity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main1);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(Main1Activity.this);
 
-        /* PLACEHOLDER IMAGE VIEWS FOR STORING HISTORY
-        ImageView img1 = (ImageView) findViewById(R.id.imageView1);
-        ImageView img2 = (ImageView) findViewById(R.id.imageView2);
-        ImageView img3 = (ImageView) findViewById(R.id.imageView3);
-        ImageView img6 = (ImageView) findViewById(R.id.imageView6);
-        ImageView img4 = (ImageView) findViewById(R.id.imageView4);
-        ImageView img5 = (ImageView) findViewById(R.id.imageView5);
-        */
+        // PLACEHOLDER IMAGE VIEW OBJECTS FOR STORING HISTORY
+//        ImageView img1 = (ImageView) findViewById(R.id.imageView1);
+//        ImageView img2 = (ImageView) findViewById(R.id.imageView2);
+//        ImageView img3 = (ImageView) findViewById(R.id.imageView3);
+//        ImageView img6 = (ImageView) findViewById(R.id.imageView6);
+//        ImageView img4 = (ImageView) findViewById(R.id.imageView4);
+//        ImageView img5 = (ImageView) findViewById(R.id.imageView5);
 
+
+        Button resetWallPaperBtn = (Button) findViewById(R.id.reset_wallpaper);
+        //button object for resetting wallpaper
     }
 
     public void getImage(View arg0) { //getImage and onActivityResult both work together to get image from user gallery
@@ -74,7 +79,7 @@ public class Main1Activity extends AppCompatActivity {
 
     }
 
-    ;
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -90,18 +95,24 @@ public class Main1Activity extends AppCompatActivity {
             ImageView imageView = (ImageView) findViewById(R.id.imgView);
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             Bitmap imageBitmap = BitmapFactory.decodeFile(picturePath);
-
             try {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(Main1Activity.this);
-                builder1.setMessage("Would you like to cancel?");
+                builder1.setMessage("Are you sure you would like to change your wallpaper?");
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
                         "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Toast.makeText(getBaseContext(), "Wallpaper unchanged",
-                                        Toast.LENGTH_SHORT).show();
+                                try {
+                                    previousWallpaper = getCurrentWallpaper();
+                                    changeWallpaper(imageBitmap);
+                                    Toast.makeText(getBaseContext(), "Wallpaper changed",
+                                            Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                dialog.cancel();
                             }
                         });
 
@@ -110,14 +121,8 @@ public class Main1Activity extends AppCompatActivity {
                         "No",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                try {
-                                    changeWallpaper(imageBitmap);
-                                    Toast.makeText(getBaseContext(), "Wallpaper changed",
-                                            Toast.LENGTH_SHORT).show();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                dialog.cancel();
+                                Toast.makeText(getBaseContext(), "Wallpaper unchanged",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -145,63 +150,19 @@ public class Main1Activity extends AppCompatActivity {
         }
     }
 
-    protected void dialog() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
-        builder1.setMessage("Would you like to cancel?");
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        try {
-                            wallpaperManager.setBitmap(getCurrentWallpaper());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-
-        builder1.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
+    protected void changeToPrevWallpaper() throws IOException {
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(Main1Activity.this);
+        if(previousWallpaper == null) {
+            Toast.makeText(getBaseContext(), "No previous wallpaper detected",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                wallpaperManager.setBitmap(previousWallpaper);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(getBaseContext(), "Wallpaper successfully reverted",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
-
-//    private void showSimpleDialog(){
-//        AlertDialog.Builder builder;
-//        builder = new AlertDialog.Builder(this);
-//
-//        builder.setMessage("Do you want to set this image as your wallpaper?");
-//
-//        //Setting message manually and performing action on button click
-//        builder.setMessage("Do you want to set this image as your wallpaper?")
-//                .setCancelable(false)
-//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        //  Action for 'Yes' Button
-//                        //exit application
-//                    }
-//                })
-//                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        //  Action for 'No' Button
-//                        Toast.makeText(getApplicationContext(),"Cancel",Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//        //Creating dialog box
-//        AlertDialog alert = builder.create();
-//        //Setting the title manually
-//        alert.setTitle("Message Title");
-//        alert.show();
-//    }
-
 }
