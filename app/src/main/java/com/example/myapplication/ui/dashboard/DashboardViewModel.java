@@ -11,7 +11,7 @@ public class DashboardViewModel extends ViewModel {
 
     public DashboardViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is where you can add new wallpapers.");
+        mText.setValue("This is where you can add new wallpapers.\nYour most recently set wallpaper will appear below.");
     }
 
     public LiveData<String> getText() {

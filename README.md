@@ -7,7 +7,11 @@ My application currently is just a welcome screen, but it will eventually be abl
 It will also be able to save older wallpapers, and import wallpapers from the web using a URL.
 
 ## Technologies Used:
-Just Java and Android Studio.
+Java
+
+Android Studio
+
+(will likely be including SQLite)
 
 ## How to Install:
 Currently, you just have to pull or clone the project into your Android Studio and run it on an emulator.

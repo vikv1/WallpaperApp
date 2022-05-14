@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <application
         android:allowBackup="true"
@@ -24,7 +25,7 @@
         <activity
             android:name=".WelcomeScreen"
             android:exported="true"
-            android:label="WelcomeScreen">
+            android:label="The Wallpaper Driver">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
