@@ -8,7 +8,9 @@ It will also be able to save older wallpapers, and import wallpapers from the we
 
 ## Technologies Used:
 Java
+
 Android Studio
+
 (will likely be including SQLite)
 
 ## How to Install:
