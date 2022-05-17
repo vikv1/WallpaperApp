@@ -43,7 +43,7 @@ public class Main1Activity extends AppCompatActivity {
 
     private ActivityMain1Binding binding;
     private static int RESULT_LOAD_IMAGE = 1;
-    ArrayList<Bitmap> prevImages = new ArrayList<>();
+    static ArrayList<Bitmap> prevImages = new ArrayList<>();
     ImageView img1 = (ImageView) findViewById(R.id.imageView1);
     ImageView img2 = (ImageView) findViewById(R.id.imageView2);
     ImageView img3 = (ImageView) findViewById(R.id.imageView3);
