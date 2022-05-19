@@ -37,11 +37,19 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.myapplication.databinding.ActivityMain1Binding;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main1Activity extends AppCompatActivity {
 
     private ActivityMain1Binding binding;
     private static int RESULT_LOAD_IMAGE = 1;
+    static ArrayList<Bitmap> prevImages = new ArrayList<>();
+    ImageView img1 = (ImageView) findViewById(R.id.imageView1);
+    ImageView img2 = (ImageView) findViewById(R.id.imageView2);
+    ImageView img3 = (ImageView) findViewById(R.id.imageView3);
+    ImageView img6 = (ImageView) findViewById(R.id.imageView6);
+    ImageView img4 = (ImageView) findViewById(R.id.imageView4);
+    ImageView img5 = (ImageView) findViewById(R.id.imageView5);
 
 
     @Override
@@ -63,12 +71,7 @@ public class Main1Activity extends AppCompatActivity {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(Main1Activity.this);
 
         // PLACEHOLDER IMAGE VIEW OBJECTS FOR STORING HISTORY
-//        ImageView img1 = (ImageView) findViewById(R.id.imageView1);
-//        ImageView img2 = (ImageView) findViewById(R.id.imageView2);
-//        ImageView img3 = (ImageView) findViewById(R.id.imageView3);
-//        ImageView img6 = (ImageView) findViewById(R.id.imageView6);
-//        ImageView img4 = (ImageView) findViewById(R.id.imageView4);
-//        ImageView img5 = (ImageView) findViewById(R.id.imageView5);
+//
 
 
         Button resetWallPaperBtn = (Button) findViewById(R.id.reset_wallpaper);
@@ -168,6 +171,47 @@ public class Main1Activity extends AppCompatActivity {
                                         public void onClick(DialogInterface dialog, int id) {
                                             try {
                                                 changeWallpaper(imageBitmap);
+                                                if(prevImages.size() < 9) { prevImages.add(imageBitmap); }
+                                                if(prevImages.size() == 9) {
+                                                    prevImages.remove(prevImages.size() - 1);
+                                                    prevImages.add(0, imageBitmap);
+
+                                                }
+                                                if(prevImages.size() == 1) {
+                                                    img1.setImageBitmap(prevImages.get(0));
+
+
+                                                } else if (prevImages.size() == 2) {
+                                                    img1.setImageBitmap(prevImages.get(0));
+                                                    img2.setImageBitmap(prevImages.get(1));
+
+                                                } else if (prevImages.size() == 3) {
+                                                    img1.setImageBitmap(prevImages.get(0));
+                                                    img2.setImageBitmap(prevImages.get(1));
+                                                    img3.setImageBitmap(prevImages.get(2));
+
+                                                } else if (prevImages.size() == 4) {
+                                                    img1.setImageBitmap(prevImages.get(0));
+                                                    img2.setImageBitmap(prevImages.get(1));
+                                                    img3.setImageBitmap(prevImages.get(2));
+                                                    img4.setImageBitmap(prevImages.get(3));
+
+                                                } else if (prevImages.size() == 5) {
+                                                    img1.setImageBitmap(prevImages.get(0));
+                                                    img2.setImageBitmap(prevImages.get(1));
+                                                    img3.setImageBitmap(prevImages.get(2));
+                                                    img4.setImageBitmap(prevImages.get(3));
+                                                    img5.setImageBitmap(prevImages.get(4));
+
+
+                                                } else if (prevImages.size() == 6) {
+                                                    img1.setImageBitmap(prevImages.get(0));
+                                                    img2.setImageBitmap(prevImages.get(1));
+                                                    img3.setImageBitmap(prevImages.get(2));
+                                                    img4.setImageBitmap(prevImages.get(3));
+                                                    img5.setImageBitmap(prevImages.get(4));
+                                                    img6.setImageBitmap(prevImages.get(5));
+                                                }
                                                 Toast.makeText(getBaseContext(), "Wallpaper changed",
                                                         Toast.LENGTH_SHORT).show();
                                             } catch (IOException e) {
