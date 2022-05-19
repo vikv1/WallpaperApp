@@ -34,7 +34,6 @@
         android:id="@+id/refresh_previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="loadImageFromStorage"
         android:text="Refresh (CURRENTLY A CRASH BUTTON)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
