@@ -11,7 +11,7 @@ Java
 
 Android Studio
 
-(will likely be including SQLite)
+Plan to implement Firebase
 
 ## How to Install:
 Currently, you just have to pull or clone the project into your Android Studio and run it on an emulator.
