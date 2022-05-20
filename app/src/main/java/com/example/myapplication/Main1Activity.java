@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 public class Main1Activity extends AppCompatActivity {
 
     private ActivityMain1Binding binding;
+    private ProgressBar spinner;
     private static final int RESULT_LOAD_IMAGE = 1;
 
     //TODO: Test if storing bitmaps in array doesn't crash app when possible
@@ -54,6 +56,7 @@ public class Main1Activity extends AppCompatActivity {
     final ImageView img6 = (ImageView) findViewById(R.id.imageView6);
     final ImageView img4 = (ImageView) findViewById(R.id.imageView4);
     final ImageView img5 = (ImageView) findViewById(R.id.imageView5);
+    final ProgressBar circle = (ProgressBar) findViewById(R.id.loadingCircle);
 
 
     @Override
@@ -117,7 +120,10 @@ public class Main1Activity extends AppCompatActivity {
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             try {
+                                                spinner.setVisibility(View.VISIBLE);
                                                 changeWallpaper(imageBitmap);
+                                                spinner.setVisibility(View.GONE);
+
                                                 if(prevImages.size() < 9)  prevImages.add(imageBitmap);
                                                 if(prevImages.size() == 9) {
                                                     prevImages.remove(prevImages.size() - 1);
