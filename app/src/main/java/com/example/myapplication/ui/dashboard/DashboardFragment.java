@@ -71,9 +71,6 @@ public class DashboardFragment extends Fragment {
         final TextView textView = binding.textDashboard;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        Button uploadBtn = (Button)rootView.findViewById(R.id.uploadImage);
-        Main1Activity main = new Main1Activity();
-
         return root;
     }
 
