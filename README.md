@@ -14,4 +14,4 @@ Android Studio
 Plan to implement Firebase
 
 ## How to Install:
-Currently, you just have to pull or clone the project into your Android Studio and run it on an emulator.
+Currently, you just have to pull or clone the project into your Android Studio and run it on an emulator or physical device.

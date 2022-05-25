@@ -10,7 +10,7 @@ public class HomeViewModel extends ViewModel {
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is where logged in users can view their previous wallpapers.");
+        mText.setValue("This is where you can see your previous wallpapers.");
     }
 
     public LiveData<String> getText() {

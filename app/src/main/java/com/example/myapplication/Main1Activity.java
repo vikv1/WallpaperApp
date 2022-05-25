@@ -13,15 +13,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.myapplication.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.activity.result.ActivityResult;
@@ -43,20 +46,21 @@ import java.util.ArrayList;
 public class Main1Activity extends AppCompatActivity {
 
     private ActivityMain1Binding binding;
-    private ProgressBar spinner;
+
     private static final int RESULT_LOAD_IMAGE = 1;
 
     //TODO: Test if storing bitmaps in array doesn't crash app when possible
     static ArrayList<Bitmap> prevImages = new ArrayList<>();
 
     //imageview objects for setting previous wallpapers
-    final ImageView img1 = (ImageView) findViewById(R.id.imageView1);
-    final ImageView img2 = (ImageView) findViewById(R.id.imageView2);
-    final ImageView img3 = (ImageView) findViewById(R.id.imageView3);
-    final ImageView img6 = (ImageView) findViewById(R.id.imageView6);
-    final ImageView img4 = (ImageView) findViewById(R.id.imageView4);
-    final ImageView img5 = (ImageView) findViewById(R.id.imageView5);
-    final ProgressBar circle = (ProgressBar) findViewById(R.id.loadingCircle);
+    ImageView img1;
+    ImageView img2;
+    ImageView img3;
+    ImageView img6;
+    ImageView img4;
+    ImageView img5;
+    Layout layoutToAdd;
+    ProgressBar spinner;
 
 
     @Override
@@ -77,6 +81,8 @@ public class Main1Activity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+//        findViewById(R.id.loadingCircle).setVisibility(View.GONE);
+
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(Main1Activity.this);
 
         Button resetWallPaperBtn = (Button) findViewById(R.id.reset_wallpaper);
@@ -86,7 +92,6 @@ public class Main1Activity extends AppCompatActivity {
     public void getImage(View arg0) { //getImage and onActivityResult both work together to get image from user gallery
         Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         getImageLauncher.launch(i);
-//        startActivityForResult(i, RESULT_LOAD_IMAGE);
 
     }
 
@@ -120,53 +125,7 @@ public class Main1Activity extends AppCompatActivity {
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             try {
-                                                spinner.setVisibility(View.VISIBLE);
                                                 changeWallpaper(imageBitmap);
-                                                spinner.setVisibility(View.GONE);
-
-                                                if(prevImages.size() < 9)  prevImages.add(imageBitmap);
-                                                if(prevImages.size() == 9) {
-                                                    prevImages.remove(prevImages.size() - 1);
-                                                    prevImages.add(0, imageBitmap);
-
-                                                }
-
-                                                //TODO: test if these don't crash
-                                                if(prevImages.size() == 1) {
-                                                    img1.setImageBitmap(prevImages.get(0));
-
-
-                                                } else if (prevImages.size() == 2) {
-                                                    img1.setImageBitmap(prevImages.get(0));
-                                                    img2.setImageBitmap(prevImages.get(1));
-
-                                                } else if (prevImages.size() == 3) {
-                                                    img1.setImageBitmap(prevImages.get(0));
-                                                    img2.setImageBitmap(prevImages.get(1));
-                                                    img3.setImageBitmap(prevImages.get(2));
-
-                                                } else if (prevImages.size() == 4) {
-                                                    img1.setImageBitmap(prevImages.get(0));
-                                                    img2.setImageBitmap(prevImages.get(1));
-                                                    img3.setImageBitmap(prevImages.get(2));
-                                                    img4.setImageBitmap(prevImages.get(3));
-
-                                                } else if (prevImages.size() == 5) {
-                                                    img1.setImageBitmap(prevImages.get(0));
-                                                    img2.setImageBitmap(prevImages.get(1));
-                                                    img3.setImageBitmap(prevImages.get(2));
-                                                    img4.setImageBitmap(prevImages.get(3));
-                                                    img5.setImageBitmap(prevImages.get(4));
-
-
-                                                } else if (prevImages.size() == 6) {
-                                                    img1.setImageBitmap(prevImages.get(0));
-                                                    img2.setImageBitmap(prevImages.get(1));
-                                                    img3.setImageBitmap(prevImages.get(2));
-                                                    img4.setImageBitmap(prevImages.get(3));
-                                                    img5.setImageBitmap(prevImages.get(4));
-                                                    img6.setImageBitmap(prevImages.get(5));
-                                                }
                                                 Toast.makeText(getBaseContext(), "Wallpaper changed",
                                                         Toast.LENGTH_SHORT).show();
                                             } catch (IOException e) {
@@ -190,8 +149,9 @@ public class Main1Activity extends AppCompatActivity {
 
                             AlertDialog alert11 = builder1.create();
                             alert11.show();
-                        } finally {
-
+                        } catch (Exception e) {
+                            Toast.makeText(getBaseContext(), "There was an error",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
