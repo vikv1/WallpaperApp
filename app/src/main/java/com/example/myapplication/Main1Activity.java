@@ -120,87 +120,12 @@ public class Main1Activity extends AppCompatActivity {
                             builder1.setMessage("Are you sure you would like to change your wallpaper?");
                             builder1.setCancelable(true);
 
-//                            findViewById(R.id.loadingCircle).setVisibility(View.VISIBLE);
-
                             builder1.setPositiveButton(
                                     "Yes",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             try {
                                                 changeWallpaper(imageBitmap);
-//                                                findViewById(R.id.loadingCircle).setVisibility(View.GONE);
-
-//                                                if(prevImages.size() < 9)  prevImages.add(imageBitmap);
-//                                                if(prevImages.size() == 9) {
-//                                                    prevImages.remove(prevImages.size() - 1);
-//                                                    prevImages.add(0, imageBitmap);
-//
-//                                                }
-//
-//                                                //TODO: test if these don't crash
-//                                                if(prevImages.size() == 1) {
-//                                                    img1 = (ImageView) findViewById(R.id.imageView1);
-//
-//                                                    img1 = (ImageView) findViewById(R.id.imageView1);
-//
-//
-//                                                } else if (prevImages.size() == 2) {
-//                                                    img1 = (ImageView) findViewById(R.id.imageView1);
-//                                                    img2 = (ImageView) findViewById(R.id.imageView2);
-//
-//                                                    img1.setImageBitmap(prevImages.get(0));
-//                                                    img2.setImageBitmap(prevImages.get(1));
-//
-//                                                } else if (prevImages.size() == 3) {
-//                                                    img1 = (ImageView) findViewById(R.id.imageView1);
-//                                                    img2 = (ImageView) findViewById(R.id.imageView2);
-//                                                    img3 = (ImageView) findViewById(R.id.imageView3);
-//
-//
-//                                                    img1.setImageBitmap(prevImages.get(0));
-//                                                    img2.setImageBitmap(prevImages.get(1));
-//                                                    img3.setImageBitmap(prevImages.get(2));
-//
-//                                                } else if (prevImages.size() == 4) {
-//                                                    img1 = (ImageView) findViewById(R.id.imageView1);
-//                                                    img2 = (ImageView) findViewById(R.id.imageView2);
-//                                                    img3 = (ImageView) findViewById(R.id.imageView3);
-//                                                    img4 = (ImageView) findViewById(R.id.imageView4);
-//
-//                                                    img1.setImageBitmap(prevImages.get(0));
-//                                                    img2.setImageBitmap(prevImages.get(1));
-//                                                    img3.setImageBitmap(prevImages.get(2));
-//                                                    img4.setImageBitmap(prevImages.get(3));
-//
-//                                                } else if (prevImages.size() == 5) {
-//                                                    img1 = (ImageView) findViewById(R.id.imageView1);
-//                                                    img2 = (ImageView) findViewById(R.id.imageView2);
-//                                                    img3 = (ImageView) findViewById(R.id.imageView3);
-//                                                    img4 = (ImageView) findViewById(R.id.imageView4);
-//                                                    img5 = (ImageView) findViewById(R.id.imageView5);
-//
-//                                                    img1.setImageBitmap(prevImages.get(0));
-//                                                    img2.setImageBitmap(prevImages.get(1));
-//                                                    img3.setImageBitmap(prevImages.get(2));
-//                                                    img4.setImageBitmap(prevImages.get(3));
-//                                                    img5.setImageBitmap(prevImages.get(4));
-//
-//
-//                                                } else if (prevImages.size() == 6) {
-//                                                    img1 = (ImageView) findViewById(R.id.imageView1);
-//                                                    img2 = (ImageView) findViewById(R.id.imageView2);
-//                                                    img3 = (ImageView) findViewById(R.id.imageView3);
-//                                                    img4 = (ImageView) findViewById(R.id.imageView4);
-//                                                    img5 = (ImageView) findViewById(R.id.imageView5);
-//                                                    img6 = (ImageView) findViewById(R.id.imageView6);
-//
-//                                                    img1.setImageBitmap(prevImages.get(0));
-//                                                    img2.setImageBitmap(prevImages.get(1));
-//                                                    img3.setImageBitmap(prevImages.get(2));
-//                                                    img4.setImageBitmap(prevImages.get(3));
-//                                                    img5.setImageBitmap(prevImages.get(4));
-//                                                    img6.setImageBitmap(prevImages.get(5));
-//                                                }
                                                 Toast.makeText(getBaseContext(), "Wallpaper changed",
                                                         Toast.LENGTH_SHORT).show();
                                             } catch (IOException e) {
@@ -224,8 +149,9 @@ public class Main1Activity extends AppCompatActivity {
 
                             AlertDialog alert11 = builder1.create();
                             alert11.show();
-                        } finally {
-
+                        } catch (Exception e) {
+                            Toast.makeText(getBaseContext(), "There was an error",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
