@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TaskInfo;
 import android.app.WallpaperManager;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +18,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Layout;
 import android.view.View;
@@ -40,14 +43,20 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityMain1Binding;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Main1Activity extends AppCompatActivity {
 
     private ActivityMain1Binding binding;
 
     private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int REQUEST_WRITE = 786;
 
     //TODO: Test if storing bitmaps in array doesn't crash app when possible
     static ArrayList<Bitmap> prevImages = new ArrayList<>();
@@ -125,6 +134,10 @@ public class Main1Activity extends AppCompatActivity {
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             try {
+//                                                if(saveImage(imageBitmap)) {
+//                                                    Toast.makeText(getBaseContext(), "success",
+//                                                            Toast.LENGTH_SHORT).show();
+//                                                }
                                                 changeWallpaper(imageBitmap);
                                                 Toast.makeText(getBaseContext(), "Wallpaper changed",
                                                         Toast.LENGTH_SHORT).show();
@@ -157,21 +170,50 @@ public class Main1Activity extends AppCompatActivity {
                 }
             });
 
+    protected void imgToDb(Bitmap bitmap) {
+        DbBitmapUtility util = new DbBitmapUtility();
+
+        util.getBytes(bitmap);
+    }
+
+    protected boolean saveImage(Bitmap imageToSave) {
+
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/images/";
+        String fileName = new SimpleDateFormat("yyMMddHHmmss").format(Calendar.getInstance().getTime()) + ".png";
+
+        File dir = new File(path);
+
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        File file = new File(path, fileName);
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            imageToSave.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
+
     protected void changeWallpaper(Bitmap bitmap) throws IOException {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
         wallpaperManager.setBitmap(bitmap);
     }
 
-    protected Bitmap getCurrentWallpaper() {
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
-        try {
-            Bitmap currentWallpaper = ((BitmapDrawable) wallpaperManager.getDrawable()).getBitmap();
-            return currentWallpaper;
-        } catch(SecurityException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
+
+
 
     protected void changeToPrevWallpaper() throws IOException {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(Main1Activity.this);
@@ -240,6 +282,17 @@ public class Main1Activity extends AppCompatActivity {
 //            }
 //        } else {
 //
+//        }
+//    }
+
+//    protected Bitmap getCurrentWallpaper() {
+//        WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
+//        try {
+//            Bitmap currentWallpaper = ((BitmapDrawable) wallpaperManager.getDrawable()).getBitmap();
+//            return currentWallpaper;
+//        } catch(SecurityException e) {
+//            e.printStackTrace();
+//            return null;
 //        }
 //    }
 }
